@@ -34,7 +34,14 @@ int main() {
         printf("--- Cadastrando Territorio 1 ---\n");
         printf("Nome do Territorio: ");
         fgets(mundo[0].nome, 30, stdin);
-        printf
+        printf("Cor do exercito: ");
+        fgets(mundo[0].cor, 10, stdin);
+        printf("Numero de tropas: ");
+        scanf("%d", &mundo[0].tropas);
+
+        printf(mundo[0].nome);
+        printf(mundo[0].cor);
+        printf("%d", mundo[0].tropas);
     } while (opcao != 0);
     
     
