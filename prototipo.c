@@ -15,15 +15,17 @@ struct territorio {
 };
 
 // --- Protótipos das Funções ---
+// limpa as entradas de scanf
 void limparBufferEntrada() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
 int main() {
-    struct territorio mundo[MAX_TERRITORIO];
+    struct territorio mapa[MAX_TERRITORIO];
     int totalTerritorio;
     int opcao;
+    int i;
 
     //MENU
     do {
@@ -31,17 +33,34 @@ int main() {
         printf("\n");
         printf("Vamos cadastrar os 5 territorios inciais do nosso mundo.\n");
 
-        printf("--- Cadastrando Territorio 1 ---\n");
-        printf("Nome do Territorio: ");
-        fgets(mundo[0].nome, 30, stdin);
-        printf("Cor do exercito: ");
-        fgets(mundo[0].cor, 10, stdin);
-        printf("Numero de tropas: ");
-        scanf("%d", &mundo[0].tropas);
+        // cadastro de territórios
+        for (i = 0; i < MAX_TERRITORIO; i++) {
+            printf("\n--- Cadastrando Territorio %d ---\n", i + 1);
+            printf("Nome do Territorio: ");
+            fgets(mapa[i].nome, 30, stdin);
 
-        printf(mundo[0].nome);
-        printf(mundo[0].cor);
-        printf("%d", mundo[0].tropas);
+            printf("Cor do exercito: ");
+            fgets(mapa[i].cor, 10, stdin);
+
+            printf("Numero de tropas: ");
+            scanf("%d", &mapa[i].tropas);
+            limparBufferEntrada();
+        };
+
+        printf("\nCadastro Incial Concluido com Sucesso\n");
+        printf("\n===========================================================\n");
+        printf("              MAPA DO MUNDO - ESTADO ATUAL                 \n");
+        printf("===========================================================\n");
+
+        // exibição de territórios cadastrados
+        for (i = 0; i < MAX_TERRITORIO; i++) {
+            printf("\nTerritorio %d:", i + 1);
+            printf("- Nome: %s", mapa[i].nome);
+            printf("- Cor: %s", mapa[i].cor);
+            printf("- Tropas: %d\n", mapa[i].tropas);
+        };
+        
+        opcao = 0;
     } while (opcao != 0);
     
     
