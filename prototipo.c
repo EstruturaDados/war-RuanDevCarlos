@@ -2,9 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// --- Constantes Globais ---
-#define MAX_TERRITORIO 5
+#include <time.h>
 
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
@@ -22,16 +20,18 @@ void limparBufferEntrada() {
 }
 
 int main() {
-    struct territorio mapa[MAX_TERRITORIO];
-    int totalTerritorio;
-    int opcao;
     int i;
+    int opcao;
+    int MAX_TERRITORIO;
+    struct territorio *mapa;
+    mapa = (struct territorio *) malloc(MAX_TERRITORIO * sizeof(struct territorio));
 
     //MENU
     do {
         printf("\n========================================================\n");
         printf("\n");
-        printf("Vamos cadastrar os 5 territorios inciais do nosso mundo.\n");
+        printf("Insira a Quantidade de Territorios: ");
+        scanf("%d", &MAX_TERRITORIO);
 
         // cadastro de territórios
         for (i = 0; i < MAX_TERRITORIO; i++) {
@@ -59,9 +59,10 @@ int main() {
             printf("- Cor: %s", mapa[i].cor);
             printf("- Tropas: %d\n", mapa[i].tropas);
         };
-        
+
+
+        free(mapa);
         opcao = 0;
     } while (opcao != 0);
-    
     
 }
