@@ -23,15 +23,19 @@ int main() {
     int i;
     int opcao;
     int MAX_TERRITORIO;
-    struct territorio *mapa;
-    mapa = (struct territorio *) malloc(MAX_TERRITORIO * sizeof(struct territorio));
+    int *quant_territorio;
+
 
     //MENU
     do {
         printf("\n========================================================\n");
         printf("\n");
         printf("Insira a Quantidade de Territorios: ");
-        scanf("%d", &MAX_TERRITORIO);
+        scanf("%d", quant_territorio);
+        limparBufferEntrada();
+
+        MAX_TERRITORIO = *quant_territorio;
+        struct territorio mapa[MAX_TERRITORIO];
 
         // cadastro de territórios
         for (i = 0; i < MAX_TERRITORIO; i++) {
@@ -60,8 +64,6 @@ int main() {
             printf("- Tropas: %d\n", mapa[i].tropas);
         };
 
-
-        free(mapa);
         opcao = 0;
     } while (opcao != 0);
     
