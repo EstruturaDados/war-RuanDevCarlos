@@ -24,19 +24,39 @@ void atacar(struct territorio *atacante, struct territorio *defensor) {
     srand(time(NULL));
     int numATK = 1 + (rand() % 6);
     int numDEF = 1 + (rand() % 6);
-    printf("\n%d, %d", numDEF, numATK);
+    
+    if (numATK > numDEF) {
+        strcpy(defensor->cor, atacante->cor);
+        int totalTropas = atacante->tropas + defensor-> tropas;
+        
+        if (totalTropas % 2 == 0){
+            atacante->tropas = totalTropas / 2;
+            defensor->tropas = totalTropas / 2;
+        } else {
+            atacante->tropas = totalTropas / 2 + 1;
+            defensor->tropas = totalTropas / 2;
+        }
+
+        printf("\n ### Atacante Venceu ### \n");
+    } else if (numDEF > numATK) {
+        strcpy(defensor->cor, atacante->cor);
+        atacante->tropas--;
+        printf("\n ### Defensor Venceu ### \n");
+    } else {
+        printf("\n ### EMPATE ### \n");
+    }
 }
 
 // função principal
 int main() {
     int i;
+    int atk;
+    int def;
     int opcao;
     int MAX_TERRITORIO;
 
     //MENU
     do {
-        printf("\n========================================================\n");
-        printf("\n");
         printf("Insira a Quantidade de Territorios: ");
         scanf("%d", &MAX_TERRITORIO);
         limparBufferEntrada();
@@ -66,16 +86,40 @@ int main() {
         };
 
         printf("\nCadastro Incial Concluido com Sucesso\n");
-        printf("\n===========================================================\n");
-        printf("              MAPA DO MUNDO - ESTADO ATUAL                 \n");
-        printf("===========================================================\n");
 
-        // exibição de territórios cadastrados
-        for (i = 0; i < MAX_TERRITORIO; i++) {
-            printf("%d. %s - Cor: %s | Tropas: %d\n", i + 1, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
-        }
+        do {
+            printf("\n===========================================================\n");
+            printf("              MAPA DO MUNDO - ESTADO ATUAL                 \n");
+            printf("===========================================================\n");
 
-        atacar(mapa, mapa);
+            // exibição de territórios cadastrados
+            for (i = 0; i < MAX_TERRITORIO; i++) {
+                printf("%d. %s - Cor: %s | Tropas: %d\n", i + 1, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
+            }
+
+            // fase de ataque
+            printf("\n --- FASE DE ATAQUE ---");
+            printf("\nEscolha o territorio atacante (1 a %d, ou 0 para sair): ", MAX_TERRITORIO);
+            scanf("%d", &atk);
+            limparBufferEntrada();
+
+            if (atk == 0) {
+                printf("\nTchau, Tchau!");
+                continue;
+            };
+
+            printf("\nEscolha o territorio defensor (1 a %d): ", MAX_TERRITORIO);
+            scanf("%d", &def);
+            limparBufferEntrada();
+
+            if ( strcmp(mapa[atk-1].cor, mapa[def-1].cor) == 0) {
+                printf("\nEste territorio ja foi dominado!");
+                continue;
+            }
+
+            atacar(&mapa[atk-1], &mapa[def-1]);
+
+        } while (atk != 0);
 
         free(mapa);
         opcao = 0;
